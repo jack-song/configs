@@ -26,6 +26,7 @@
 #### ChromeOS
 
  - Crouton
+ - https://github.com/dnschneid/crouton
 
 
 ## Dev
