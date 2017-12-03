@@ -27,6 +27,7 @@
 
  - Crouton
  - https://github.com/dnschneid/crouton
+ - sudo sh ~/Downloads/crouton -e -t e17,xiwi,keyboard,touch,audio -n e1
 
 
 ## Dev
@@ -40,4 +41,3 @@
 #### Terminal
  - Presto
  - Pure Theme
- - Tmux
