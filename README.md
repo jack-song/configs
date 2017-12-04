@@ -16,7 +16,7 @@
 
 ## OS
 
- - Dropbox
+ - Dropbox (sync)
  - KeepassX
  - VSCode
  - Chrome
@@ -25,9 +25,11 @@
 
 #### ChromeOS
 
+ - Caret
+ - Termux
  - Crouton
  - https://github.com/dnschneid/crouton
- - sudo sh ~/Downloads/crouton -e -t e17,xiwi,keyboard,touch,audio -n e1
+ - sudo sh ~/Downloads/crouton -e -t xfce,keyboard
 
 
 ## Dev
