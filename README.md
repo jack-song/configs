@@ -16,20 +16,25 @@
 
 ## OS
 
- - Dropbox (sync)
- - KeepassX
+ - Dropbox (sync with google drive)
+ - KeepassX (https://app.keeweb.info/)
  - VSCode
  - Chrome
  - Vimium
+ 
+#### Linux
+ - software-properties-common tilda git zsh vim
+ - install prezto
+ - install VSCODE
 
 
 #### ChromeOS
 
- - Caret
- - Termux
  - Crouton
  - https://github.com/dnschneid/crouton
- - sudo sh ~/Downloads/crouton -e -t xfce,keyboard
+ - Crouton extension (HIDPI)
+ - sudo sh ~/Downloads/crouton -e -t xfce,xiwi,keyboard -f ~/Downloads/xenialbootstrap.tar.bz2
+ - set font DPI in xfce
 
 
 ## Dev
@@ -41,5 +46,4 @@
  - vim keybindings
 
 #### Terminal
- - Presto
- - Pure Theme
+ - zsh + prezto
