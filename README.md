@@ -12,7 +12,7 @@
  - caps to ctrl
 
 ## OS
- - Dropbox (sync with google drive)
+ - Dropbox (sync with google drive, cloudHQ)
  - KeepassX (https://app.keeweb.info/)
  - jrnl.sh
  
@@ -29,6 +29,10 @@
  - Crouton extension (HIDPI)
  - sudo sh ~/Downloads/crouton -e -t xfce,xiwi,keyboard -f ~/Downloads/xenialbootstrap.tar.bz2
  - set font DPI in xfce
+
+#### macOS
+ - karabiner
+ - keyboard maestro
  
 #### Chrome
  - Vimium
