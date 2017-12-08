@@ -17,13 +17,7 @@
  - jrnl.sh
  
 #### Linux
- - software-properties-common tilda git zsh vim
- - install prezto
- - install VSCODE
- 
- - nautilus-dropbox keepassx python-pip python-dev build-essential
- - sudo pip install --upgrade pip virtualenv jrnl
- - log into dropbox, connect jrnl to dropbox
+ - `bash <(wget -qO- https://raw.githubusercontent.com/jack-song/configs/master/dev.sh)`
 
 #### ChromeOS
  - Secure Shell
