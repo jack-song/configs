@@ -61,4 +61,5 @@ fancy_echo "Changing your shell to zsh ..."
 
 fancy_echo "Installing rcm ..."
   sudo add-apt-repository ppa:martin-frost/thoughtbot-rcm
+  sudo aptitude update
   install_if_needed rcm
