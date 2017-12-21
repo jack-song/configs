@@ -63,3 +63,6 @@ fancy_echo "Installing rcm ..."
   sudo add-apt-repository ppa:martin-frost/thoughtbot-rcm
   sudo aptitude update
   install_if_needed rcm
+
+fancy_echo "Installing dropbox ..."
+  dropbox start -i
