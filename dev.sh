@@ -47,9 +47,6 @@ fancy_echo "Installing mosh ..."
 fancy_echo "Installing docker ..."
   install_if_needed docker
 
-fancy_echo "Installing nautilus-dropbox ..."
-  install_if_needed nautilus-dropbox
-
 fancy_echo "Installing python-pip ..."
   install_if_needed python-pip
 
@@ -63,6 +60,10 @@ fancy_echo "Installing rcm ..."
   sudo add-apt-repository ppa:martin-frost/thoughtbot-rcm
   sudo aptitude update
   install_if_needed rcm
+  
+fancy_echo "Installing dropbox ..."
+  cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
+  ~/.dropbox-dist/dropboxd
 
 fancy_echo "Installing dropbox ..."
   dropbox start -i
