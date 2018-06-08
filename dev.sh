@@ -28,6 +28,8 @@ fancy_echo "Updating system packages ..."
 
 fancy_echo "Installing git ..."
   install_if_needed git
+  install_if_needed gitk
+  install_if_needed git-gui
 
 fancy_echo "Installing vim ..."
   install_if_needed vim-gtk
