@@ -50,9 +50,6 @@ fancy_echo "Installing docker ..."
 fancy_echo "Installing python-pip ..."
   install_if_needed python-pip
 
-fancy_echo "Installing jrnl ..."
-  sudo pip install --upgrade pip jrnl
-
 fancy_echo "Changing your shell to zsh ..."
   chsh -s $(which zsh)
 
