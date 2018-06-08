@@ -58,9 +58,7 @@ fancy_echo "Installing rcm ..."
   sudo aptitude update
   install_if_needed rcm
   
-fancy_echo "Installing dropbox ..."
-  cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
-  ~/.dropbox-dist/dropboxd
-
-fancy_echo "Installing dropbox ..."
-  dropbox start -i
+fancy_echo "Installing node ..."
+  curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+  sudo aptitude update
+  install_if_needed nodejs
