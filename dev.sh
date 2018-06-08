@@ -62,3 +62,4 @@ fancy_echo "Installing node ..."
   curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
   sudo aptitude update
   install_if_needed nodejs
+  install_if_needed npm
