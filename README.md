@@ -14,7 +14,6 @@
 ## OS
  - Dropbox (sync with google drive, cloudHQ)
  - KeepassX (https://app.keeweb.info/)
- - jrnl.sh
  
 #### Linux
  - `bash <(wget -qO- https://raw.githubusercontent.com/jack-song/configs/master/dev.sh)`
@@ -27,8 +26,7 @@
  - Crouton
  - https://github.com/dnschneid/crouton
  - Crouton extension (HIDPI)
- - sudo sh ~/Downloads/crouton -e -t xfce,xiwi,keyboard -f ~/Downloads/xenialbootstrap.tar.bz2
- - set font DPI in xfce
+ - sudo sh ~/Downloads/crouton -e -t unity,xiwi,keyboard -f ~/Downloads/xenialbootstrap.tar.bz2
 
 #### macOS
  - karabiner
