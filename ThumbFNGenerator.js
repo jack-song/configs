@@ -1,20 +1,22 @@
+const MODS_WIHOUT_SHIFT = [
+    "caps_lock",
+    "left_command",
+    "left_control",
+    "left_alt",
+    "right_command",
+    "right_control",
+    "right_alt",
+];
+
 // generates fn section for karabiner json, mostly to automate preserving shift modifier
 // Usage: just plug it into web console
-const regularKeySwapRules = (key, target) => {
+function swap(key, target) {
     return [
         {
             "from": {
                 "key_code": key,
                 "modifiers": {
-                    "optional": [
-                        "caps_lock",
-                        "left_command",
-                        "left_control",
-                        "left_alt",
-                        "right_command",
-                        "right_control",
-                        "right_alt",
-                    ]
+                    "optional": MODS_WIHOUT_SHIFT
                 }
             },
             "to": [{
@@ -30,15 +32,7 @@ const regularKeySwapRules = (key, target) => {
                     "mandatory": [
                         "left_shift",
                     ],
-                    "optional": [
-                        "caps_lock",
-                        "left_command",
-                        "left_control",
-                        "left_alt",
-                        "right_command",
-                        "right_control",
-                        "right_alt",
-                    ]
+                    "optional": MODS_WIHOUT_SHIFT
                 }
             },
             "to": [{
@@ -50,24 +44,16 @@ const regularKeySwapRules = (key, target) => {
             }],
             "type": "basic"
         },
-    ]
+    ];
 }
 
-const reverseShiftKeySwapRules = (key, target) => {
+const shiftedSwap = (key, target) => {
     return [
         {
             "from": {
                 "key_code": key,
                 "modifiers": {
-                    "optional": [
-                        "caps_lock",
-                        "left_command",
-                        "left_control",
-                        "left_alt",
-                        "right_command",
-                        "right_control",
-                        "right_alt",
-                    ]
+                    "optional": MODS_WIHOUT_SHIFT
                 }
             },
             "to": [{
@@ -86,15 +72,7 @@ const reverseShiftKeySwapRules = (key, target) => {
                     "mandatory": [
                         "left_shift",
                     ],
-                    "optional": [
-                        "caps_lock",
-                        "left_command",
-                        "left_control",
-                        "left_alt",
-                        "right_command",
-                        "right_control",
-                        "right_alt",
-                    ]
+                    "optional": MODS_WIHOUT_SHIFT
                 }
             },
             "to": [{
@@ -106,7 +84,7 @@ const reverseShiftKeySwapRules = (key, target) => {
     ]
 }
 
-const functionLayerRules = (key, target) => {
+const func = (key, target) => {
     return [
         {
             "from": {
@@ -115,53 +93,74 @@ const functionLayerRules = (key, target) => {
                     "mandatory": [
                         "fn",
                     ],
+                    "optional": MODS_WIHOUT_SHIFT
                 }
             },
             "to": [
             {
                 "key_code": target,
-                "repeat": true
+                "repeat": true,
             }
             ],
             "type": "basic"
         },
-    ]
-}
-
-const cmdOverrideRules = (key, target) => {
-    return [
         {
             "from": {
                 "key_code": key,
                 "modifiers": {
                     "mandatory": [
-                        "left_command",
-                    ],
-                }
-            },
-            "to": [
-            {
-                "key_code": target,
-                "repeat": true
-            }
-            ],
-            "type": "basic"
-        },
-    ]
-}
-
-const shiftOverrideRules = (key, target) => {
-    return [
-        {
-            "from": {
-                "key_code": key,
-                "modifiers": {
-                    "mandatory": [
+                        "fn",
                         "left_shift",
                     ],
-                    "optional": [
-                        "left_command",
-                    ]
+                    "optional": MODS_WIHOUT_SHIFT
+                }
+            },
+            "to": [
+            {
+                "key_code": target,
+                "repeat": true,
+                "modifiers": [
+                    "left_shift"
+                ]
+            }
+            ],
+            "type": "basic"
+        },
+    ]
+}
+
+const shiftedFunc = (key, target) => {
+    return [
+        {
+            "from": {
+                "key_code": key,
+                "modifiers": {
+                    "mandatory": [
+                        "fn",
+                    ],
+                    "optional": MODS_WIHOUT_SHIFT
+                }
+            },
+            "to": [
+            {
+                "key_code": target,
+                "repeat": true,
+                "modifiers": [
+                    "left_shift"
+                ]
+            }
+            ],
+            "type": "basic"
+        },
+        {
+            "from": {
+                "key_code": key,
+                "modifiers": {
+                    "mandatory": [
+                        "fn",
+                        "left_shift",
+                    ],
+                    "optional": MODS_WIHOUT_SHIFT
                 }
             },
             "to": [
@@ -175,28 +174,28 @@ const shiftOverrideRules = (key, target) => {
     ]
 }
 
-const functionLayerShifts = (key, target) => {
+const holdTap = (source, hold, tap) => {
     return [
         {
+            "type": "basic",
             "from": {
-                "key_code": key,
+                "key_code": source,
                 "modifiers": {
-                    "mandatory": [
-                        "fn",
-                    ],
-                }
+                    "optional": ["any"]
+                },
             },
             "to": [
-            {
-                "key_code": target,
-                "modifiers": [
-                    "left_shift"
-                ],
-                "repeat": true
-            }
+                {
+                    "key_code": hold,
+                    "lazy": true
+                }
             ],
-            "type": "basic"
-        },
+            "to_if_alone": [
+                {
+                    "key_code": tap
+                }
+            ],
+        }
     ]
 }
 
@@ -209,180 +208,87 @@ const makeRule = (name, rules) => {
 
 // Plug console output into https://genesy.github.io/karabiner-complex-rules-generator/
 const rules = [
-    makeRule('Colemak-DH Wide Fat-Z', [
-        // top
-        // q unchanged
-        // w unchanged
-        ...regularKeySwapRules('e', 'f'),
-        ...regularKeySwapRules('r', 'p'),
-        ...regularKeySwapRules('t', 'b'),
-        ...regularKeySwapRules('u', 'j'),
-        ...regularKeySwapRules('i', 'l'),
-        ...regularKeySwapRules('o', 'u'),
-        ...regularKeySwapRules('p', 'y'),
-        ...reverseShiftKeySwapRules('open_bracket', 'semicolon'),
-        // top
-        // a unchanged
-        ...regularKeySwapRules('s', 'r'),
-        ...regularKeySwapRules('d', 's'),
-        ...regularKeySwapRules('f', 't'),
-        // g unchanged
-        ...regularKeySwapRules('j', 'm'),
-        ...regularKeySwapRules('k', 'n'),
-        ...regularKeySwapRules('l', 'e'),
-        ...regularKeySwapRules('semicolon', 'i'),
-        ...regularKeySwapRules('quote', 'o'),
-        // bot
-        ...regularKeySwapRules('left_shift', 'z'),
-        ...regularKeySwapRules('z', 'x'),
-        ...regularKeySwapRules('x', 'c'),
-        ...regularKeySwapRules('c', 'd'),
-        // v unchanged
-        ...regularKeySwapRules('m', 'k'),
-        ...regularKeySwapRules('comma', 'h'),
-        ...regularKeySwapRules('period', 'comma'),
-        ...regularKeySwapRules('slash', 'period'),
-        ...regularKeySwapRules('right_shift', 'slash'),
-        // right 2
-        ...reverseShiftKeySwapRules('close_bracket', 'open_bracket'),
-        ...regularKeySwapRules('return_or_enter', 'quote'),
+    makeRule('Colemak-DH SpreadHand', [
+        // Top
+        ...swap('1', 'q'),
+        ...swap('3', 'w'),
+        ...swap('4', 'f'),
+        ...swap('r', 'p'),
+        ...swap('t', 'b'),
+        // Right
+        ...swap('i', 'j'),
+        ...swap('o', 'l'),
+        ...swap('0', 'u'),
+        ...swap('hyphen', 'y'),
+        ...shiftedSwap('equal_sign', 'semicolon'),
+
+        // Home
+        ...swap('q', 'a'),
+        ...swap('w', 'r'),
+        ...swap('e', 's'),
+        ...swap('d', 't'),
+        ...swap('f', 'g'),
+        // Right
+        ...swap('k', 'm'),
+        ...swap('l', 'n'),
+        ...swap('p', 'e'),
+        ...swap('open_bracket', 'i'),
+        ...swap('close_bracket', 'o'),
+
+        // Bottom
+        ...swap('caps_lock', 'z'),
+        ...swap('a', 'x'),
+        ...swap('s', 'c'),
+        ...swap('x', 'd'),
+        ...swap('c', 'v'),
+        // Right
+        ...swap('comma', 'k'),
+        ...swap('period', 'h'),
+        ...swap('semicolon', 'comma'),
+        ...swap('quote', 'period'),
+        ...swap('return_or_enter', 'slash'),
+
+        // Extra
+        ...shiftedSwap('delete_or_backspace', 'open_bracket'),
+        ...swap('backslash', 'quote'),
     ]),
-    makeRule('ThumbFN Wide Fat-Z', [
-        // FN: num row on Q row
-        ...functionLayerRules('q', '1'),
-        ...functionLayerRules('w', '2'),
-        ...functionLayerRules('e', '3'),
-        ...functionLayerRules('r', '4'),
-        ...functionLayerRules('t', '5'),
-        // Skip y
-        ...functionLayerRules('u', '6'),
-        ...functionLayerRules('i', '7'),
-        ...functionLayerRules('o', '8'),
-        ...functionLayerRules('p', '9'),
-        ...functionLayerRules('open_bracket', '0'),
-        // FN: leftover symbols and arrows on home row
-        ...functionLayerRules('a', 'close_bracket'),
-        ...functionLayerRules('s', 'hyphen'),
-        ...functionLayerShifts('d', 'hyphen'),
-        ...functionLayerRules('f', 'equal_sign'),
-        ...functionLayerShifts('g', 'equal_sign'),
-        // skip h
-        ...functionLayerRules('j', 'left_arrow'),
-        ...functionLayerRules('k', 'down_arrow'),
-        ...functionLayerRules('l', 'up_arrow'),
-        ...functionLayerRules('semicolon', 'right_arrow'),
-        ...functionLayerShifts('quote', 'close_bracket'),
-        // FN: sym row on bot row
-        // Start with left shift
-        ...functionLayerShifts('left_shift', '1'),
-        ...functionLayerShifts('z', '2'),
-        ...functionLayerShifts('x', '3'),
-        ...functionLayerShifts('c', '4'),
-        ...functionLayerShifts('v', '5'),
-        // skip b and n
-        ...functionLayerShifts('m', '6'),
-        ...functionLayerShifts('comma', '7'),
-        ...functionLayerShifts('period', '8'),
-        ...functionLayerShifts('slash', '9'),
-        ...functionLayerShifts('right_shift', '0'),
-        // Spacebar and side symbols
-        ...functionLayerRules('spacebar', 'return_or_enter'),
-        ...functionLayerShifts('tab', 'grave_accent_and_tilde'),
-        ...functionLayerRules('caps_lock', 'grave_accent_and_tilde'),
-        ...functionLayerShifts('close_bracket', 'backslash'),
-        ...functionLayerRules('return_or_enter', 'backslash'),
+    makeRule('FN layer', [
+        // Numbers, inverted shift
+        ...shiftedFunc('1', '1'),
+        ...shiftedFunc('3', '2'),
+        ...shiftedFunc('4', '3'),
+        ...shiftedFunc('r', '4'),
+        ...shiftedFunc('t', '5'),
+        ...shiftedFunc('i', '6'),
+        ...shiftedFunc('o', '7'),
+        ...shiftedFunc('0', '8'),
+        ...shiftedFunc('hyphen', '9'),
+        ...shiftedFunc('equal_sign', '0'),
+
+        // Arrows on home row, preferring curl
+        ...func('l', 'left_arrow'),
+        ...func('semicolon', 'down_arrow'),
+        ...func('p', 'up_arrow'),
+        ...func('open_bracket', 'right_arrow'),
+
+        // Other symbols on left home row
+        ...func('q', 'grave_accent_and_tilde'),
+        ...func('w', 'hyphen'),
+        ...func('e', 'equal_sign'),
+        ...func('d', 'close_bracket'),
+        ...func('f', 'backslash'),
     ]),
-    makeRule('Utility and thumb keys', [
-        ...regularKeySwapRules('caps_lock', 'left_command'),
-        // shift(lcmd) space - esc(tilde)
-        ...regularKeySwapRules('left_command', 'left_shift'),
-        ...regularKeySwapRules('grave_accent_and_tilde', 'escape'),
-        // backspace(rcmd) fn(ralt) - enter(backslash)
-        ...regularKeySwapRules('right_command', 'delete_or_backspace'),
-        ...regularKeySwapRules('right_alt', 'fn'), 
-        ...regularKeySwapRules('backslash', 'return_or_enter'),
-            // {
-            //     "type": "basic",
-            //     "from": {
-            //         "key_code": "left_command"
-            //     },
-            //     "to_if_alone": [
-            //         {
-            //             "key_code": "escape"
-            //         }
-            //     ],
-            //     "to": [
-            //         {
-            //             "key_code": "left_shift"
-            //         }
-            //     ]
-            // },
-            // {
-            //     "type": "basic",
-            //     "from": {
-            //         "key_code": "right_command"
-            //     },
-            //     "to_if_alone": [
-            //         {
-            //             "key_code": "delete_or_backspace"
-            //         }
-            //     ],
-            //     "to": [
-            //         {
-            //             "key_code": "fn"
-            //         }
-            //     ]
-            //   },
+    makeRule('Utility Thumbs + Left Pinky', [
+        ...holdTap('spacebar', 'left_shift', 'spacebar'),
+        ...holdTap('right_command', 'fn', 'delete_or_backspace'),
+        ...holdTap('left_command', 'left_command', 'escape'),
+        ...holdTap('right_option', 'right_control', 'return_or_enter'),
+        ...holdTap('grave_accent_and_tilde', 'left_alt', 'tab')
     ]),
-    makeRule('Left hand shift keys', [
-        ...shiftOverrideRules('grave_accent_and_tilde', 'return_or_enter'),
-        ...shiftOverrideRules('caps_lock', 'delete_forward'),
-    ]),
-    // makeRule('MegaFN', [
-    //     // FN: num row on Q row
-    //     ...functionLayerRules('q', '1'),
-    //     ...functionLayerRules('w', '2'),
-    //     ...functionLayerRules('e', '3'),
-    //     ...functionLayerRules('r', '4'),
-    //     ...functionLayerRules('t', '5'),
-    //     ...functionLayerRules('y', '6'),
-    //     ...functionLayerRules('u', '7'),
-    //     ...functionLayerRules('i', '8'),
-    //     ...functionLayerRules('o', '9'),
-    //     ...functionLayerRules('p', '0'),
-    //     // FN: sym row on home row
-    //     ...functionLayerShifts('a', '1'),
-    //     ...functionLayerShifts('s', '2'),
-    //     ...functionLayerShifts('d', '3'),
-    //     ...functionLayerShifts('f', '4'),
-    //     ...functionLayerShifts('g', '5'),
-    //     ...functionLayerShifts('h', '6'),
-    //     ...functionLayerShifts('j', '7'),
-    //     ...functionLayerShifts('k', '8'),
-    //     ...functionLayerShifts('l', '9'),
-    //     ...functionLayerShifts('semicolon', '0'),
-    //     // FN: leftover symbols
-    //     ...functionLayerRules('z', 'grave_accent_and_tilde'),
-    //     ...functionLayerShifts('x', 'grave_accent_and_tilde'),
-    //     ...functionLayerRules('c', 'hyphen'),
-    //     ...functionLayerShifts('v', 'hyphen'),
-    //     ...functionLayerRules('b', 'close_bracket'),
-    //     ...functionLayerShifts('n', 'close_bracket'),
-    //     ...functionLayerRules('m', 'equal_sign'),
-    //     ...functionLayerShifts('comma', 'equal_sign'),
-    //     ...functionLayerRules('period', 'backslash'),
-    //     ...functionLayerShifts('slash', 'backslash'),
-    // ]),
-    // makeRule('CMD VIM Arrow Keys', [
-    //     ...cmdOverrideRules('h', 'left_arrow'),
-    //     ...cmdOverrideRules('j', 'down_arrow'),
-    //     ...cmdOverrideRules('k', 'up_arrow'),
-    //     ...cmdOverrideRules('l', 'right_arrow'),
-    // ]),
 ]
 
 const json = {
-    "title": "Colemak WideZ ThumbFN",
+    "title": "Colemak SpreadHand PowerThumb",
     rules
   }
 
